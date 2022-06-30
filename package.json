@@ -10,13 +10,15 @@
 	"scripts": {
 		"dev": "node scripts/watch.mjs",
 		"build": "npm run typecheck && node scripts/build.mjs && electron-builder --config .electron-builder.config.js",
-		"typecheck": "tsc --noEmit --project packages/renderer/tsconfig.json"
+		"typecheck": "tsc --noEmit --project src/renderer/tsconfig.json"
 	},
 	"engines": {
 		"node": ">=14.17.0"
 	},
 	"dependencies": {
-		"electron-store": "^8.0.1"
+		"electron-store": "^8.0.1",
+		"fs-extra": "^10.1.0",
+		"walkdir": "^0.4.1"
 	},
 	"devDependencies": {
 		"@types/react": "^17.0.39",

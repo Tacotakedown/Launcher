@@ -23,7 +23,7 @@ npm run build
 
 #### Invoke Electron and NodeJS API in `Preload-script`
 
--  **packages/preload/index.ts**
+-  **src/preload/index.ts**
 
    ```typescript
    import fs from 'fs';
@@ -34,7 +34,7 @@ npm run build
    contextBridge.exposeInMainWorld('ipcRenderer', ipcRenderer);
    ```
 
--  **packages/renderer/src/global.d.ts**
+-  **src/renderer/src/global.d.ts**
 
    ```typescript
    // Defined in the window
@@ -44,7 +44,7 @@ npm run build
    }
    ```
 
--  **packages/renderer/src/main.ts**
+-  **src/renderer/src/main.ts**
 
    ```typescript
    // Use Electron and NodeJS API in the Renderer-process
@@ -59,7 +59,7 @@ npm run build
 -  Main-process, Preload-script are also built with Vite, and they're built as [build.lib](https://vitejs.dev/config/#build-lib).  
     So they just need to configure Rollup.
 
-**Click to see more** 👉 [packages/main/vite.config.ts](https://github.com/ch99q/vite-solid-electron/blob/main/packages/main/vite.config.ts)
+**Click to see more** 👉 [src/main/vite.config.ts](https://github.com/ch99q/vite-solid-electron/blob/main/packages/main/vite.config.ts)
 
 ```js
 export default {
