@@ -40,7 +40,11 @@ render(() => {
 		window.removeLoading();
 	});
 
-	return <App />;
+	return (
+		<Router>
+			<App />
+		</Router>
+	);
 }, document.getElementById('root') as HTMLElement);
 
 console.log('fs', window.fs);

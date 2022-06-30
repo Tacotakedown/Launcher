@@ -1,26 +1,26 @@
-'use strict';
-var fs = require('fs');
-var electron = require('electron');
+"use strict";
+var fs = require("fs");
+var electron = require("electron");
 function _interopDefaultLegacy(e) {
-	return e && typeof e === 'object' && 'default' in e ? e : { default: e };
+  return e && typeof e === "object" && "default" in e ? e : { "default": e };
 }
 var fs__default = /* @__PURE__ */ _interopDefaultLegacy(fs);
-const domReady = (condition = ['complete', 'interactive']) => {
-	return new Promise((resolve) => {
-		if (condition.includes(document.readyState)) {
-			resolve(true);
-		} else {
-			document.addEventListener('readystatechange', () => {
-				if (condition.includes(document.readyState)) {
-					resolve(true);
-				}
-			});
-		}
-	});
+const domReady = (condition = ["complete", "interactive"]) => {
+  return new Promise((resolve) => {
+    if (condition.includes(document.readyState)) {
+      resolve(true);
+    } else {
+      document.addEventListener("readystatechange", () => {
+        if (condition.includes(document.readyState)) {
+          resolve(true);
+        }
+      });
+    }
+  });
 };
 function useLoading() {
-	const className = `loaders-css__square-spin`;
-	const styleContent = `
+  const className = `loaders-css__square-spin`;
+  const styleContent = `
 @keyframes square-spin {
   25% { transform: perspective(100px) rotateX(180deg) rotateY(0); }
   50% { transform: perspective(100px) rotateX(180deg) rotateY(180deg); }
@@ -47,45 +47,43 @@ function useLoading() {
   z-index: 9;
 }
     `;
-	const oStyle = document.createElement('style');
-	const oDiv = document.createElement('div');
-	oStyle.id = 'app-loading-style';
-	oStyle.innerHTML = styleContent;
-	oDiv.className = 'app-loading-wrap';
-	oDiv.innerHTML = `<div class="${className}"><div></div></div>`;
-	return {
-		appendLoading() {
-			document.head.appendChild(oStyle);
-			document.body.appendChild(oDiv);
-		},
-		removeLoading() {
-			document.head.removeChild(oStyle);
-			document.body.removeChild(oDiv);
-		},
-	};
+  const oStyle = document.createElement("style");
+  const oDiv = document.createElement("div");
+  oStyle.id = "app-loading-style";
+  oStyle.innerHTML = styleContent;
+  oDiv.className = "app-loading-wrap";
+  oDiv.innerHTML = `<div class="${className}"><div></div></div>`;
+  return {
+    appendLoading() {
+      document.head.appendChild(oStyle);
+      document.body.appendChild(oDiv);
+    },
+    removeLoading() {
+      document.head.removeChild(oStyle);
+      document.body.removeChild(oDiv);
+    }
+  };
 }
 const { appendLoading, removeLoading } = useLoading();
 (async () => {
-	await domReady();
-	appendLoading();
+  await domReady();
+  appendLoading();
 })();
-electron.contextBridge.exposeInMainWorld('fs', fs__default['default']);
-electron.contextBridge.exposeInMainWorld('removeLoading', removeLoading);
-electron.contextBridge.exposeInMainWorld(
-	'ipcRenderer',
-	withPrototype(electron.ipcRenderer)
-);
+electron.contextBridge.exposeInMainWorld("fs", fs__default["default"]);
+electron.contextBridge.exposeInMainWorld("removeLoading", removeLoading);
+electron.contextBridge.exposeInMainWorld("ipcRenderer", withPrototype(electron.ipcRenderer));
 function withPrototype(obj) {
-	const protos = Object.getPrototypeOf(obj);
-	for (const [key, value] of Object.entries(protos)) {
-		if (Object.prototype.hasOwnProperty.call(obj, key)) continue;
-		if (typeof value === 'function') {
-			obj[key] = function (...args) {
-				return value.call(obj, ...args);
-			};
-		} else {
-			obj[key] = value;
-		}
-	}
-	return obj;
+  const protos = Object.getPrototypeOf(obj);
+  for (const [key, value] of Object.entries(protos)) {
+    if (Object.prototype.hasOwnProperty.call(obj, key))
+      continue;
+    if (typeof value === "function") {
+      obj[key] = function(...args) {
+        return value.call(obj, ...args);
+      };
+    } else {
+      obj[key] = value;
+    }
+  }
+  return obj;
 }
